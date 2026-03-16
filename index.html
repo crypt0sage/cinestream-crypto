@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CinemaFlow - Premium Movie Streaming</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #0066ff;
+            --secondary: #00d4ff;
+            --accent: #ff0066;
+            --dark: #0a0e27;
+            --darker: #050813;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--dark) 0%, var(--darker) 100%);
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 102, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav a {
+            color: #fff;
+            margin: 0 1.5rem;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--secondary);
+        }
+
+        .btn-subscribe {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            padding: 0.7rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-subscribe:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 102, 255, 0.4);
+        }
+
+        /* Hero */
+        .hero {
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+            margin-bottom: 4rem;
+        }
+
+        .hero-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.2) 0%, rgba(255, 0, 102, 0.1) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1400px;
+            margin: 0 auto;
+            height: 100%;
+            padding: 3rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .hero-text {
+            flex: 1;
+            animation: slideIn 0.8s ease forwards;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            color: #a0aac4;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0, 102, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid var(--primary);
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+        }
+
+        .hero-featured {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .featured-card {
+            position: relative;
+            width: 280px;
+            height: 420px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 102, 255, 0.3);
+            animation: slideInRight 0.8s ease forwards;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .featured-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #fff 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Movie Grid */
+        .movie-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .movie-card {
+            position: relative;
+            height: 300px;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .movie-card:hover {
+            transform: translateY(-8px) scale(1.02);
+        }
+
+        .movie-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.4s ease;
+        }
+
+        .movie-card:hover img {
+            transform: scale(1.08);
+            filter: brightness(0.6);
+        }
+
+        .movie-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 30%, rgba(0, 0, 0, 0.95));
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+        }
+
+        .movie-card:hover .movie-overlay {
+            opacity: 1;
+        }
+
+        .movie-info h3 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .movie-meta {
+            display: flex;
+            gap: 0.8rem;
+            font-size: 0.85rem;
+            color: #a0aac4;
+            margin-bottom: 1rem;
+        }
+
+        .rating {
+            background: var(--accent);
+            color: white;
+            padding: 0.3rem 0.7rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .play-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            padding: 0.6rem 1.4rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 102, 255, 0.4);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--dark);
+            border: 1px solid rgba(0, 102, 255, 0.2);
+            border-radius: 20px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.4s ease;
+            position: relative;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .modal-close:hover {
+            background: var(--accent);
+        }
+
+        /* Player */
+        .player-container {
+            width: 100%;
+            padding-bottom: 56.25%;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .player-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Subscription Plans */
+        .subscription-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .plan-card {
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.1) 0%, rgba(0, 212, 255, 0.05) 100%);
+            border: 2px solid rgba(0, 102, 255, 0.2);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .plan-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 102, 255, 0.2);
+        }
+
+        .plan-card.featured {
+            border: 2px solid var(--primary);
+            background: linear-gradient(135deg, rgba(0, 102, 255, 0.2) 0%, rgba(0, 212, 255, 0.1) 100%);
+            transform: scale(1.05);
+        }
+
+        .plan-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0.5rem 0;
+        }
+
+        .plan-features {
+            text-align: left;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+            color: #a0aac4;
+        }
+
+        .plan-features li {
+            margin-bottom: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .plan-features li:before {
+            content: '✓';
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .select-plan-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.6rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .select-plan-btn:hover {
+            transform: scale(1.02);
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .payment-option {
+            background: rgba(0, 102, 255, 0.05);
+            border: 2px solid rgba(0, 102, 255, 0.2);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .payment-option:hover {
+            border-color: var(--primary);
+            background: rgba(0, 102, 255, 0.1);
+        }
+
+        .payment-option.selected {
+            border-color: var(--secondary);
+            background: rgba(0, 212, 255, 0.2);
+        }
+
+        .payment-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .payment-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .movie-detail {
+            padding: 2rem;
+        }
+
+        .detail-header {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .detail-poster {
+            width: 150px;
+            height: 225px;
+            border-radius: 12px;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .detail-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .detail-info h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .detail-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #a0aac4;
+        }
+
+        .detail-description {
+            color: #a0aac4;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .watch-btn {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            margin-bottom: 1rem;
+        }
+
+        .watch-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(0, 102, 255, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .hero-content {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+
+            .detail-header {
+                flex-direction: column;
+            }
+
+            .movie-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+
+            .plan-card.featured {
+                transform: scale(1);
+            }
+
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav {
+                gap: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">CinemaFlow</div>
+            <nav>
+                <a href="#trending">Trending</a>
+                <a href="#categories">Categories</a>
+                <a href="#about">About</a>
+                <button class="btn-subscribe" onclick="openSubscriptionModal()">Subscribe</button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Infinite Stories, Zero Limits</h1>
+                <p>Stream premium movies, series, and documentaries in stunning 4K. Join millions of viewers worldwide.</p>
+                <div class="hero-buttons">
+                    <button class="btn-primary" onclick="openSubscriptionModal()">Start Streaming</button>
+                    <button class="btn-secondary" onclick="document.getElementById('trending').scrollIntoView({behavior: 'smooth'})">Explore Now</button>
+                </div>
+            </div>
+            <div class="hero-featured">
+                <div class="featured-card">
+                    <img src="https://images.unsplash.com/photo-1633356122544-f134324ef6db?w=400&h=600&fit=crop" alt="Featured Movie">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending Section -->
+    <section class="container" id="trending">
+        <h2 class="section-title">🔥 Trending Now</h2>
+        <div class="movie-grid">
+            <div class="movie-card" onclick="openMovieDetail('The Quantum Paradox', 'A mind-bending thriller about time travel and alternate realities.', 'https://images.unsplash.com/photo-1489599849228-d0754cc17d37?w=400&h=600&fit=crop', 8.7, '2024')">
+                <img src="https://images.unsplash.com/photo-1489599849228-d0754cc17d37?w=400&h=600&fit=crop" alt="The Quantum Paradox">
+                <div class="movie-overlay">
+                    <div class="movie-info">
+                        <h3>The Quantum Paradox</h3>
+                        <div class="movie-meta">
+                            <span class="rating">8.7</span>
+                            <span>2024</span>
+                        </div>
+                        <button class="play-btn" onclick="event.stopPropagation(); playMovie()">▶ Play</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card" onclick="openMovieDetail('Neon Dreams', 'A cyberpunk adventure in a dystopian future.', 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=400&h=600&fit=crop', 8.3, '2024')">
+                <img src="https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=400&h=600&fit=crop" alt="Neon Dreams">
+                <div class="movie-overlay">
+                    <div class="movie-info">
+                        <h3>Neon Dreams</h3>
+                        <div class="movie-meta">
+                            <span class="rating">8.3</span>
+                            <span>2024</span>
+                        </div>
+                        <button class="play-btn" onclick="event.stopPropagation(); playMovie()">▶ Play</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card" onclick="openMovieDetail('Echoes of Tomorrow', 'An epic sci-fi drama exploring humanity.', 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=600&fit=crop', 8.9, '2024')">
+                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=600&fit=crop" alt="Echoes of Tomorrow">
+                <div class="movie-overlay">
+                    <div class="movie-info">
+                        <h3>Echoes of Tomorrow</h3>
+                        <div class="movie-meta">
+                            <span class="rating">8.9</span>
+                            <span>2024</span>
+                        </div>
+                        <button class="play-btn" onclick="event.stopPropagation(); playMovie()">▶ Play</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card" onclick="openMovieDetail('The Last Horizon', 'An intimate story of love across star systems.', 'https://images.unsplash.com/photo-1536440936694-6a9e388fdf01?w=400&h=600&fit=crop', 8.1, '2024')">
+                <img src="https://images.unsplash.com/photo-1536440936694-6a9e388fdf01?w=400&h=600&fit=crop" alt="The Last Horizon">
+                <div class="movie-overlay">
+                    <div class="movie-info">
+                        <h3>The Last Horizon</h3>
+                        <div class="movie-meta">
+                            <span class="rating">8.1</span>
+                            <span>2024</span>
+                        </div>
+                        <button class="play-btn" onclick="event.stopPropagation(); playMovie()">▶ Play</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card" onclick="openMovieDetail('Midnight Protocol', 'A high-stakes cyber espionage thriller.', 'https://images.unsplash.com/photo-1495707902905-78189c392d94?w=400&h=600&fit=crop', 8.5, '2024')">
+                <img src="https://images.unsplash.com/photo-1495707902905-78189c392d94?w=400&h=600&fit=crop" alt="Midnight Protocol">
+                <div class="movie-overlay">
+                    <div class="movie-info">
+                        <h3>Midnight Protocol</h3>
+                        <div class="movie-meta">
+                            <span class="rating">8.5</span>
+                            <span>2024</span>
+                        </div>
+                        <button class="play-btn" onclick="event.stopPropagation(); playMovie()">▶ Play</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card" onclick="openMovieDetail('Crystalline Hearts', 'A poetic romance in the Arctic.', 'https://images.unsplash.com/photo-1513691032009-eb53ca3014ca?w=400&h=600&fit=crop', 8.2, '2024')">
+                <img src="https://images.unsplash.com/photo-1513691032009-eb53ca3014ca?w=400&h=600&fit=crop" alt="Crystalline Hearts">
+                <div class="movie-overlay">
+                    <div class="movie-info">
+                        <h3>Crystalline Hearts</h3>
+                        <div class="movie-meta">
+                            <span class="rating">8.2</span>
+                            <span>2024</span>
+                        </div>
+                        <button class="play-btn" onclick="event.stopPropagation(); playMovie()">▶ Play</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card" onclick="openMovieDetail('Urban Legends', 'Urban myths become reality in horror.', 'https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=400&h=600&fit=crop', 8.4, '2023')">
+                <img src="https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=400&h=600&fit=crop" alt="Urban Legends">
+                <div class="movie-overlay">
+                    <div class="movie-info">
+                        <h3>Urban Legends</h3>
+                        <div class="movie-meta">
+                            <span class="rating">8.4</span>
+                            <span>2023</span>
+                        </div>
+                        <button class="play-btn" onclick="event.stopPropagation(); playMovie()">▶ Play</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card" onclick="openMovieDetail('Genesis Protocol', 'First contact with alien civilization.', 'https://images.unsplash.com/photo-1532619675605-1ede6c2e2fe0?w=400&h=600&fit=crop', 8.8, '2024')">
+                <img src="https://images.unsplash.com/photo-1532619675605-1ede6c2e2fe0?w=400&h=600&fit=crop" alt="Genesis Protocol">
+                <div class="movie-overlay">
+                    <div class="movie-info">
+                        <h3>Genesis Protocol</h3>
+                        <div class="movie-meta">
+                            <span class="rating">8.8</span>
+                            <span>2024</span>
+                        </div>
+                        <button class="play-btn" onclick="event.stopPropagation(); playMovie()">▶ Play</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="container" id="categories" style="margin-bottom: 4rem;">
+        <h2 class="section-title">🎬 Browse Categories</h2>
+        <div class="movie-grid">
+            <div class="movie-card" onclick="openMovieDetail('Action Masterpiece', 'High-octane adventure.', 'https://images.unsplash.com/photo-1494288858383-8cbb6b3b3a7f?w=400&h=600&fit=crop', 8.6, '2024')">
+                <img src="https://images.unsplash.com/photo-1494288858383-8cbb6b3b3a7f?w=400&h=600&fit=crop" alt="Action Masterpiece">
+                <div class="movie-overlay">
+                    <div class="movie-info">
+                        <h3>Action Masterpiece</h3>
+                        <div class="movie-meta">
+                            <span class="rating">8.6</span>
+                            <span>2024</span>
+                        </div>
+                        <button class="play-btn" onclick="event.stopPropagation(); playMovie()">▶ Play</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card" onclick="openMovieDetail('Cosmic Mystery', 'Discovery in outer space.', 'https://images.unsplash.com/photo-1462017136477-37d440cbb217?w=400&h=600&fit=crop', 8.3, '2024')">
+                <img src="https://images.unsplash.com/photo-1462017136477-37d440cbb217?w=400&h=600&fit=crop" alt="Cosmic Mystery">
+                <div class="movie-overlay">
+                    <div class="movie-info">
+                        <h3>Cosmic Mystery</h3>
+                        <div class="movie-meta">
+                            <span class="rating">8.3</span>
+                            <span>2024</span>
+                        </div>
+                        <button class="play-btn" onclick="event.stopPropagation(); playMovie()">▶ Play</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card" onclick="openMovieDetail('Garden of Secrets', 'Mystery in a hidden sanctuary.', 'https://images.unsplash.com/photo-1469022563149-aa64dbd37dae?w=400&h=600&fit=crop', 8.0, '2023')">
+                <img src="https://images.unsplash.com/photo-1469022563149-aa64dbd37dae?w=400&h=600&fit=crop" alt="Garden of Secrets">
+                <div class="movie-overlay">
+                    <div class="movie-info">
+                        <h3>Garden of Secrets</h3>
+                        <div class="movie-meta">
+                            <span class="rating">8.0</span>
+                            <span>2023</span>
+                        </div>
+                        <button class="play-btn" onclick="event.stopPropagation(); playMovie()">▶ Play</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card" onclick="openMovieDetail('Shadows Rising', 'Dark fantasy epic.', 'https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=600&fit=crop', 9.1, '2024')">
+                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=400&h=600&fit=crop" alt="Shadows Rising">
+                <div class="movie-overlay">
+                    <div class="movie-info">
+                        <h3>Shadows Rising</h3>
+                        <div class="movie-meta">
+                            <span class="rating">9.1</span>
+                            <span>2024</span>
+                        </div>
+                        <button class="play-btn" onclick="event.stopPropagation(); playMovie()">▶ Play</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card" onclick="openMovieDetail('Ocean\'s Promise', 'Family adventure beneath waves.', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop', 7.9, '2024')">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=600&fit=crop" alt="Ocean's Promise">
+                <div class="movie-overlay">
+                    <div class="movie-info">
+                        <h3>Ocean's Promise</h3>
+                        <div class="movie-meta">
+                            <span class="rating">7.9</span>
+                            <span>2024</span>
+                        </div>
+                        <button class="play-btn" onclick="event.stopPropagation(); playMovie()">▶ Play</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card" onclick="openMovieDetail('Midnight Heist', 'Slick crime thriller.', 'https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=400&h=600&fit=crop', 8.7, '2024')">
+                <img src="https://images.unsplash.com/photo-1518676590629-3dcbd9c5a5c9?w=400&h=600&fit=crop" alt="Midnight Heist">
+                <div class="movie-overlay">
+                    <div class="movie-info">
+                        <h3>Midnight Heist</h3>
+                        <div class="movie-meta">
+                            <span class="rating">8.7</span>
+                            <span>2024</span>
+                        </div>
+                        <button class="play-btn" onclick="event.stopPropagation(); playMovie()">▶ Play</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card" onclick="openMovieDetail('Starlight Serenade', 'Musical romance.', 'https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=400&h=600&fit=crop', 8.2, '2024')">
+                <img src="https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?w=400&h=600&fit=crop" alt="Starlight Serenade">
+                <div class="movie-overlay">
+                    <div class="movie-info">
+                        <h3>Starlight Serenade</h3>
+                        <div class="movie-meta">
+                            <span class="rating">8.2</span>
+                            <span>2024</span>
+                        </div>
+                        <button class="play-btn" onclick="event.stopPropagation(); playMovie()">▶ Play</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="movie-card" onclick="openMovieDetail('Silent Revolutions', 'Powerful documentary.', 'https://images.unsplash.com/photo-1559027615-cd2628902d4a?w=400&h=600&fit=crop', 8.5, '2024')">
+                <img src="https://images.unsplash.com/photo-1559027615-cd2628902d4a?w=400&h=600&fit=crop" alt="Silent Revolutions">
+                <div class="movie-overlay">
+                    <div class="movie-info">
+                        <h3>Silent Revolutions</h3>
+                        <div class="movie-meta">
+                            <span class="rating">8.5</span>
+                            <span>2024</span>
+                        </div>
+                        <button class="play-btn" onclick="event.stopPropagation(); playMovie()">▶ Play</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Movie Detail Modal -->
+    <div class="modal" id="movieModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeMovieDetail()">✕</button>
+            <div class="movie-detail">
+                <div class="detail-header">
+                    <div class="detail-poster">
+                        <img id="detailPoster" src="" alt="Movie">
+                    </div>
+                    <div class="detail-info">
+                        <h2 id="detailTitle"></h2>
+                        <div class="detail-meta">
+                            <span id="detailRating"></span>
+                            <span id="detailYear"></span>
+                            <span>2h 28m</span>
+                            <span>4K • 5.1 Audio</span>
+                        </div>
+                        <p class="detail-description" id="detailDescription"></p>
+                        <button class="watch-btn" onclick="playMovie()">▶ Watch Now</button>
+                        <button class="watch-btn" style="background: rgba(0, 102, 255, 0.1); border: 2px solid rgba(0, 102, 255, 0.5); color: var(--secondary);">+ Add to Watchlist</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Subscription Modal -->
+    <div class="modal" id="subscriptionModal">
+        <div class="modal-content" style="max-width: 850px;">
+            <button class="modal-close" onclick="closeSubscriptionModal()">✕</button>
+            <div class="movie-detail">
+                <h2 style="font-size: 2.2rem; margin-bottom: 1rem;">Choose Your Plan</h2>
+                <p style="color: #a0aac4; margin-bottom: 2rem;">Select a subscription plan and enjoy unlimited streaming</p>
+                
+                <div class="subscription-plans">
+                    <div class="plan-card" onclick="selectPlan('basic')">
+                        <div class="plan-name">Basic</div>
+                        <div class="plan-price">$4.99</div>
+                        <div style="color: #a0aac4; font-size: 0.9rem; margin-bottom: 1rem;">/month</div>
+                        <ul class="plan-features">
+                            <li>HD Quality (720p)</li>
+                            <li>1 Device</li>
+                            <li>Ad-supported</li>
+                        </ul>
+                        <button class="select-plan-btn" onclick="event.stopPropagation(); selectPlanAndPay('basic')">Select</button>
+                    </div>
+
+                    <div class="plan-card featured" onclick="selectPlan('premium')">
+                        <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">MOST POPULAR</div>
+                        <div class="plan-name">Premium</div>
+                        <div class="plan-price">$12.99</div>
+                        <div style="color: #a0aac4; font-size: 0.9rem; margin-bottom: 1rem;">/month</div>
+                        <ul class="plan-features">
+                            <li>4K Ultra HD</li>
+                            <li>4 Devices</li>
+                            <li>Ad-free</li>
+                            <li>Dolby Atmos</li>
+                        </ul>
+                        <button class="select-plan-btn" onclick="event.stopPropagation(); selectPlanAndPay('premium')">Select</button>
+                    </div>
+
+                    <div class="plan-card" onclick="selectPlan('family')">
+                        <div class="plan-name">Family</div>
+                        <div class="plan-price">$17.99</div>
+                        <div style="color: #a0aac4; font-size: 0.9rem; margin-bottom: 1rem;">/month</div>
+                        <ul class="plan-features">
+                            <li>4K Ultra HD</li>
+                            <li>6 Devices</li>
+                            <li>Ad-free</li>
+                            <li>Kids Profile</li>
+                        </ul>
+                        <button class="select-plan-btn" onclick="event.stopPropagation(); selectPlanAndPay('family')">Select</button>
+                    </div>
+                </div>
+
+                <div style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid rgba(0, 102, 255, 0.2);">
+                    <h3 style="margin-bottom: 1.5rem; font-size: 1.2rem; font-weight: 700;">💳 Payment Method</h3>
+                    <div class="payment-methods">
+                        <div class="payment-option selected" onclick="selectPaymentMethod(this, 'card')">
+                            <div class="payment-icon">💳</div>
+                            <div class="payment-name">Card</div>
+                        </div>
+                        <div class="payment-option" onclick="selectPaymentMethod(this, 'bitcoin')">
+                            <div class="payment-icon">₿</div>
+                            <div class="payment-name">Bitcoin</div>
+                        </div>
+                        <div class="payment-option" onclick="selectPaymentMethod(this, 'ethereum')">
+                            <div class="payment-icon">Ξ</div>
+                            <div class="payment-name">Ethereum</div>
+                        </div>
+                        <div class="payment-option" onclick="selectPaymentMethod(this, 'usdc')">
+                            <div class="payment-icon">◎</div>
+                            <div class="payment-name">USDC</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="watch-btn" style="margin-top: 2rem;" onclick="completeSubscription()">Complete Subscription</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Video Player Modal -->
+    <div class="modal" id="playerModal">
+        <div class="modal-content" style="max-width: 90%; max-height: 90vh; width: auto;">
+            <button class="modal-close" onclick="closePlayer()">✕</button>
+            <div class="player-container">
+                <video controls>
+                    <source src="https://commondatastorage.googleapis.com/gtv-videos-library/sample/BigBuckBunny.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedPlan = 'premium';
+        let selectedPayment = 'card';
+
+        function openMovieDetail(title, description, image, rating, year) {
+            document.getElementById('detailTitle').textContent = title;
+            document.getElementById('detailDescription').textContent = description;
+            document.getElementById('detailPoster').src = image;
+            document.getElementById('detailRating').innerHTML = `<span style="background: var(--accent); padding: 0.3rem 0.7rem; border-radius: 4px; font-weight: 600;">${rating}</span>`;
+            document.getElementById('detailYear').textContent = year;
+            document.getElementById('movieModal').classList.add('active');
+        }
+
+        function closeMovieDetail() {
+            document.getElementById('movieModal').classList.remove('active');
+        }
+
+        function playMovie() {
+            closeMovieDetail();
+            document.getElementById('playerModal').classList.add('active');
+        }
+
+        function closePlayer() {
+            document.getElementById('playerModal').classList.remove('active');
+            document.querySelector('#playerModal video').pause();
+        }
+
+        function openSubscriptionModal() {
+            document.getElementById('subscriptionModal').classList.add('active');
+        }
+
+        function closeSubscriptionModal() {
+            document.getElementById('subscriptionModal').classList.remove('active');
+        }
+
+        function selectPlan(plan) {
+            selectedPlan = plan;
+        }
+
+        function selectPlanAndPay(plan) {
+            selectedPlan = plan;
+            completeSubscription();
+        }
+
+        function selectPaymentMethod(element, method) {
+            selectedPayment = method;
+            document.querySelectorAll('.payment-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        function completeSubscription() {
+            const planPrices = { basic: '$4.99', premium: '$12.99', family: '$17.99' };
+            const paymentMethods = { card: 'Credit Card', bitcoin: 'Bitcoin', ethereum: 'Ethereum', usdc: 'USDC' };
+            
+            alert(`✓ Subscription Confirmed!\n\nPlan: ${selectedPlan.toUpperCase()}\nPrice: ${planPrices[selectedPlan]}/month\nPayment: ${paymentMethods[selectedPayment]}\n\nYou can now stream unlimited movies in 4K!`);
+            closeSubscriptionModal();
+        }
+
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
